@@ -81,20 +81,20 @@ export function ProvetecniaLayout({ children }: ProvetecniaLayoutProps) {
         )}
       >
         {/* Logo Header */}
-        <div className="flex h-16 items-center justify-between px-6 border-b border-border bg-gradient-primary">
+        <div className="flex h-16 items-center justify-between px-6 border-b border-border bg-gradient-to-r from-primary via-primary to-accent backdrop-blur-sm">
           <div className="flex items-center space-x-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-white/20">
-              <Shield className="h-6 w-6 text-white" />
+            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/20 backdrop-blur-sm shadow-glow">
+              <Shield className="h-7 w-7 text-white" />
             </div>
             <div>
               <h1 className="text-xl font-bold text-white">Provetecnia</h1>
-              <p className="text-xs text-white/80">Sistema de Gestión</p>
+              <p className="text-xs text-white/90">Tech Solutions</p>
             </div>
           </div>
           <Button
             variant="ghost"
             size="icon"
-            className="lg:hidden text-white hover:bg-white/20"
+            className="lg:hidden text-white hover:bg-white/20 rounded-xl"
             onClick={() => setSidebarOpen(false)}
           >
             <X className="h-5 w-5" />
@@ -110,24 +110,30 @@ export function ProvetecniaLayout({ children }: ProvetecniaLayoutProps) {
                 key={item.name}
                 to={item.href}
                 className={cn(
-                  "group flex items-center rounded-lg px-3 py-2.5 text-sm font-medium transition-colors",
+                  "group flex items-center rounded-2xl px-4 py-3 text-sm font-medium transition-all duration-300 relative overflow-hidden",
                   active
-                    ? "bg-primary text-primary-foreground shadow-corporate-sm"
-                    : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
+                    ? "bg-gradient-primary text-white shadow-glow transform scale-105"
+                    : "text-muted-foreground hover:bg-gradient-to-r hover:from-accent/20 hover:to-primary/10 hover:text-foreground hover:shadow-card hover:scale-102"
                 )}
                 onClick={() => setSidebarOpen(false)}
               >
+                <div className="absolute inset-0 bg-gradient-glow opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 <item.icon
                   className={cn(
-                    "mr-3 h-5 w-5 flex-shrink-0",
-                    active ? "text-primary-foreground" : "text-muted-foreground"
+                    "mr-3 h-5 w-5 flex-shrink-0 transition-transform duration-300 relative z-10",
+                    active ? "text-white scale-110" : "text-muted-foreground group-hover:scale-110"
                   )}
                 />
-                <div className="flex-1">
-                  <div className="font-medium">{item.name}</div>
-                  <div className="text-xs opacity-70">{item.description}</div>
+                <div className="flex-1 relative z-10">
+                  <div className={cn("font-semibold", active ? "text-white" : "")}>{item.name}</div>
+                  <div className={cn("text-xs opacity-80", active ? "text-white/90" : "")}>{item.description}</div>
                 </div>
-                {active && <ChevronRight className="h-4 w-4" />}
+                {active && (
+                  <div className="relative z-10">
+                    <ChevronRight className="h-4 w-4 text-white" />
+                    <div className="absolute -right-1 -top-1 w-2 h-2 bg-accent rounded-full animate-pulse" />
+                  </div>
+                )}
               </NavLink>
             );
           })}
@@ -135,19 +141,22 @@ export function ProvetecniaLayout({ children }: ProvetecniaLayoutProps) {
 
         {/* User Info */}
         <div className="border-t border-border p-4">
-          <div className="flex items-center space-x-3 rounded-lg bg-accent/50 p-3">
-            <div className="h-8 w-8 rounded-full bg-primary flex items-center justify-center">
-              <span className="text-sm font-medium text-white">AD</span>
+          <div className="flex items-center space-x-3 rounded-2xl bg-gradient-to-r from-accent/30 to-primary/20 p-4 backdrop-blur-sm border border-border/50">
+            <div className="h-10 w-10 rounded-2xl bg-gradient-primary flex items-center justify-center shadow-glow">
+              <span className="text-sm font-bold text-white">AD</span>
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium text-foreground truncate">
+              <p className="text-sm font-semibold text-foreground truncate">
                 Admin Demo
               </p>
-              <p className="text-xs text-muted-foreground truncate">
+              <p className="text-xs text-muted-foreground truncate flex items-center">
+                <div className="w-2 h-2 bg-accent rounded-full mr-2 animate-pulse" />
                 Master Master
               </p>
             </div>
-            <Settings className="h-4 w-4 text-muted-foreground" />
+            <div className="p-2 rounded-xl bg-primary/10 hover:bg-primary/20 transition-colors cursor-pointer">
+              <Settings className="h-4 w-4 text-primary" />
+            </div>
           </div>
         </div>
       </div>
@@ -155,24 +164,28 @@ export function ProvetecniaLayout({ children }: ProvetecniaLayoutProps) {
       {/* Main content */}
       <div className="lg:ml-72">
         {/* Top bar */}
-        <header className="h-16 bg-card border-b border-border flex items-center justify-between px-6">
+        <header className="h-16 bg-gradient-to-r from-card via-card to-secondary/30 border-b border-border/50 flex items-center justify-between px-6 backdrop-blur-sm">
           <Button
             variant="ghost"
             size="icon"
-            className="lg:hidden"
+            className="lg:hidden rounded-xl hover:bg-gradient-to-r hover:from-accent/20 hover:to-primary/10"
             onClick={() => setSidebarOpen(true)}
           >
             <Menu className="h-5 w-5" />
           </Button>
           
           <div className="flex-1 lg:ml-0 ml-4">
-            <h2 className="text-lg font-semibold text-foreground">
+            <h2 className="text-xl font-bold bg-gradient-primary bg-clip-text text-transparent">
               {navigation.find(item => isActive(item.href))?.name || "Dashboard"}
             </h2>
+            <p className="text-sm text-muted-foreground flex items-center mt-1">
+              <div className="w-2 h-2 bg-accent rounded-full mr-2 animate-pulse" />
+              Sistema de Gestión Integral
+            </p>
           </div>
 
-          <div className="flex items-center space-x-4">
-            <div className="hidden md:block text-sm text-muted-foreground">
+          <div className="flex items-center space-x-3">
+            <div className="hidden md:block text-sm text-muted-foreground bg-secondary/30 px-3 py-1 rounded-xl border border-border/30">
               Último acceso: Hoy 14:30
             </div>
           </div>
